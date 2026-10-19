@@ -741,13 +741,11 @@ section { position: relative; padding: 140px 0; }
   .timeline { grid-template-columns: 1fr; }
   .about__media {
     min-height: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
-  .about__img { position: static; width: 100%; height: auto; }
-  .about__img--1 { grid-column: 1 / -1; aspect-ratio: 16/11; }
-  .about__img--2 { aspect-ratio: 4/3; }
+  .about__img { position: static; width: 100%; height: auto; aspect-ratio: 3/4; }
   .cta { padding: 120px 0; }
   .cta__inner .btn {
     max-width: 100%;
