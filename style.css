@@ -327,10 +327,8 @@ section { position: relative; padding: 140px 0; }
 .about { background: var(--bg); }
 .about__inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 72px; align-items: center; }
 
-.about__media { position: relative; min-height: 460px; }
-.about__img { position: absolute; border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
-.about__img--1 { width: 68%; aspect-ratio: 1/1.1; top: 0; left: 0; z-index: 2; }
-.about__img--2 { width: 55%; aspect-ratio: 4/3; bottom: 0; right: 0; z-index: 1; box-shadow: var(--shadow-lg); }
+.about__media { position: relative; display: flex; justify-content: center; }
+.about__img { position: relative; width: 100%; max-width: 440px; aspect-ratio: 3/4; border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
 
 .about__text { font-size: 1.1rem; color: var(--text-soft); margin-bottom: 20px; max-width: 520px; }
 
