@@ -138,11 +138,15 @@ class Carousel {
     this.buildDots();
     this.bindEvents();
 
-    // aguarda o layout estabilizar antes de medir
-    requestAnimationFrame(() => {
+    // Inicializa imediatamente (o layout ja esta pronto pois o CSS e render-blocking).
+    // Nao depende de requestAnimationFrame, que nao dispara em aba nao visivel.
+    this.measure();
+    this.goTo(this.index, { instant: true });
+    this.startAutoplay();
+
+    window.addEventListener('load', () => {
       this.measure();
       this.goTo(this.index, { instant: true });
-      this.startAutoplay();
     });
   }
 
@@ -186,11 +190,31 @@ class Carousel {
 
   goTo(index, { instant = false } = {}) {
     this.index = index;
-    this.track.style.transition = instant ? 'none' : '';
-    const centerOffset = (this.viewport.clientWidth - this.slideWidth) / 2;
-    this.track.style.transform = `translateX(${-this.index * this.slideWidth + centerOffset}px)`;
+
+    if (instant) {
+      this.track.style.transition = 'none';
+      this.applyTransform();
+      this.track.style.transition = '';
+    } else {
+      // Normaliza o indice para a faixa dos clones ANTES de animar.
+      // Garante o loop infinito mesmo se 'transitionend' nao disparar.
+      if (this.index >= this.count * 2 || this.index < this.count) {
+        this.track.style.transition = 'none';
+        this.index = this.index >= this.count * 2 ? this.index - this.count : this.index + this.count;
+        this.applyTransform();
+        void this.track.offsetWidth; // forca reflow para aplicar o salto sem transicao
+        this.track.style.transition = '';
+      }
+      this.applyTransform();
+    }
+
     this.updateDots();
     this.updateCenter();
+  }
+
+  applyTransform() {
+    const centerOffset = (this.viewport.clientWidth - this.slideWidth) / 2;
+    this.track.style.transform = `translateX(${-this.index * this.slideWidth + centerOffset}px)`;
   }
 
   updateCenter() {

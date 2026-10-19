@@ -405,7 +405,7 @@ section { position: relative; padding: 140px 0; }
 .carousel .container { width: 100%; }
 
 .carousel__viewport { overflow: hidden; width: 100%; }
-.carousel__track { display: flex; will-change: transform; }
+.carousel__track { display: flex; will-change: transform; transition: transform 0.65s var(--ease); }
 .carousel__slide { flex: 0 0 auto; padding: 0 12px; }
 
 .gallery .carousel { padding: 0 32px; }
