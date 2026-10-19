@@ -174,7 +174,8 @@ class Carousel {
   }
 
   measure() {
-    this.slideWidth = this.track.children[0].getBoundingClientRect().width;
+    // offsetWidth ignora transforms (scale) e reflete a largura real de layout
+    this.slideWidth = this.track.children[0].offsetWidth;
   }
 
   updateDots() {
@@ -186,7 +187,8 @@ class Carousel {
   goTo(index, { instant = false } = {}) {
     this.index = index;
     this.track.style.transition = instant ? 'none' : '';
-    this.track.style.transform = `translateX(${-this.index * this.slideWidth}px)`;
+    const centerOffset = (this.viewport.clientWidth - this.slideWidth) / 2;
+    this.track.style.transform = `translateX(${-this.index * this.slideWidth + centerOffset}px)`;
     this.updateDots();
     this.updateCenter();
   }
@@ -216,8 +218,20 @@ class Carousel {
 
     this.root.addEventListener('mouseenter', () => this.stopAutoplay());
     this.root.addEventListener('mouseleave', () => this.startAutoplay());
-    this.root.addEventListener('touchstart', () => this.stopAutoplay(), { passive: true });
-    this.root.addEventListener('touchend', () => this.startAutoplay());
+
+    // Swipe no celular
+    let touchStartX = 0;
+    this.root.addEventListener('touchstart', (e) => {
+      this.stopAutoplay();
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    this.root.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) {
+        if (dx < 0) { this.next(); } else { this.prev(); }
+      }
+      this.startAutoplay();
+    }, { passive: true });
 
     let resizeTimer;
     window.addEventListener('resize', () => {

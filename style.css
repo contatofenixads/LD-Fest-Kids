@@ -463,28 +463,38 @@ section { position: relative; padding: 140px 0; }
   position: relative;
   background: #fff;
   border-radius: var(--radius-lg);
-  padding: 52px 44px 40px;
+  padding: 60px 48px 44px;
   text-align: center;
-  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 77, 141, 0.10);
+  box-shadow: 0 24px 64px rgba(255, 77, 141, 0.10), 0 6px 20px rgba(29, 29, 31, 0.05);
+  overflow: hidden;
+}
+.testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--btn), var(--pink-medium), var(--gold));
 }
 .testimonial-card__mark {
-  width: 34px; height: 34px;
-  color: var(--pink-medium);
-  margin: 0 auto 18px;
+  position: absolute;
+  top: 20px; left: 26px;
+  width: 42px; height: 42px;
+  color: var(--pink-light);
 }
 .testimonial-card__stars {
   display: flex;
   justify-content: center;
   gap: 4px;
-  color: var(--gold);
+  color: var(--btn);
   margin-bottom: 22px;
 }
-.testimonial-card__stars svg { width: 16px; height: 16px; }
+.testimonial-card__stars svg { width: 17px; height: 17px; }
 .testimonial-card__quote {
-  font-size: 1.2rem;
+  font-size: 1.18rem;
   color: var(--text);
   margin-bottom: 32px;
-  line-height: 1.55;
+  line-height: 1.6;
   letter-spacing: -0.01em;
 }
 .testimonial-card__footer {
@@ -497,22 +507,33 @@ section { position: relative; padding: 140px 0; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 46px; height: 46px;
+  width: 50px; height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--pink-light), var(--gold));
-  color: var(--btn-hover);
+  background: linear-gradient(135deg, var(--btn), var(--pink-medium));
+  color: #fff;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(255, 77, 141, 0.32);
 }
 .testimonial-card__meta { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
 .testimonial-card__name { font-weight: 600; color: var(--text); font-size: 0.95rem; }
 .testimonial-card__context { font-size: 0.82rem; color: var(--text-soft); }
 
 @media (max-width: 640px) {
+  .carousel__arrow { display: none; }
+  .carousel__dots { bottom: -32px; }
+  .carousel__dot { width: 8px; height: 8px; }
+
+  .gallery .carousel { padding: 0 22px; gap: 0; }
+  .gallery .carousel__slide { width: min(340px, 86vw); }
+  .gallery .ph-media { aspect-ratio: 4/5; border-radius: var(--radius-md); }
+
+  .carousel--testimonials { gap: 0; }
   .carousel--testimonials .carousel__slide { width: 88vw; }
-  .testimonial-card { padding: 40px 26px 32px; }
-  .testimonial-card__quote { font-size: 1.08rem; }
+  .testimonial-card { padding: 48px 26px 36px; border-radius: var(--radius-md); }
+  .testimonial-card__quote { font-size: 1.05rem; margin-bottom: 26px; }
+  .testimonial-card__mark { width: 34px; height: 34px; top: 16px; left: 20px; }
 }
 
 /* ---------- Temas ---------- */
@@ -676,7 +697,7 @@ section { position: relative; padding: 140px 0; }
   .hero__media { order: -1; max-width: 460px; margin: 0 auto; aspect-ratio: 4/3; }
 
   .about__inner { grid-template-columns: 1fr; }
-  .about__media { max-width: 420px; margin: 0 auto; }
+  .about__media { width: 100%; max-width: 420px; margin: 0 auto; }
   .about__content { text-align: center; }
   .about__text { margin-left: auto; margin-right: auto; }
 
@@ -718,8 +739,22 @@ section { position: relative; padding: 140px 0; }
   .grid--services { grid-template-columns: 1fr; }
   .grid--highlights { grid-template-columns: 1fr; }
   .timeline { grid-template-columns: 1fr; }
-  .about__media { min-height: 340px; }
-  .gallery .carousel__slide { width: 280px; }
+  .about__media {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .about__img { position: static; width: 100%; height: auto; }
+  .about__img--1 { grid-column: 1 / -1; aspect-ratio: 16/11; }
+  .about__img--2 { aspect-ratio: 4/3; }
   .cta { padding: 120px 0; }
+  .cta__inner .btn {
+    max-width: 100%;
+    white-space: normal;
+    padding: 18px 30px;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
   .whatsapp-float { width: 52px; height: 52px; bottom: 18px; right: 18px; }
 }
